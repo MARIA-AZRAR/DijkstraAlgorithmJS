@@ -1,4 +1,4 @@
-let graph = {
+﻿let graph = {
     start: {A: 5, B: 2},
     A:{start: 1, C: 4, D:2},
     B:{A: 8, D: 7},         // implementing the graph using a nested JavaScript object
@@ -12,6 +12,7 @@ let shortestDistanceNode = (distances, visited) => {
       let shortest = null;
       
         // for each node in the distances object
+
       for (let node in distances) {
           // if no node has been assigned to shortest yet
             // or if the current node's distance is smaller than the current shortest
@@ -31,24 +32,31 @@ let findShortestPath = (graph, startNode, endNode) => {
  
     // track distances from the start node using a hash object
       let distances = {};
-    distances[endNode] = "Infinity";
-    distances = Object.assign(distances, graph[startNode]);
+    distances[endNode] = "Infinity";  
+    console.log(distances);  /////////////////////////////////////////////////////////////
+
+    distances = Object.assign(distances, graph[startNode]);    //it assigns the values Object.assign(target,source) like if startNod is start then { B: 2, A: 5 }
+    console.log(distances);
+
    // track paths using a hash object
     let parents = { endNode: null };
-    for (let child in graph[startNode]) {
+    for (let child in graph[startNode]) {  //we are getting start object {A: 5, B: 2} and assigning it start {endNode=Null,A: "start", B: "start"},
      parents[child] = startNode;
     }
+
+    console.log(parents);
+
      
     // collect visited nodes
       let visited = [];
    // find the nearest node
       let node = shortestDistanceNode(distances, visited);
-    
+
     // for that node:
     while (node) {
     // find its distance from the start node & its child nodes
-     let distance = distances[node];
-     let children = graph[node]; 
+     let distance = distances[node];   //in case of B which will be 2
+     let children = graph[node];      //childern of B will be { A: 8, D: 7 }
          
     // for each of those child nodes:
          for (let child in children) {
@@ -95,11 +103,10 @@ let findShortestPath = (graph, startNode, endNode) => {
    };
 
 
-    console.log(findShortestPath(graph,"start","finish"));
+    console.log(findShortestPath(graph,"start","B"));
     //console.log(findShortestPath(graph, "start", "start"));
-    console.log(findShortestPath(graph, "A", "start"));
-    
-    console.log(findShortestPath(graph, "B", "D"));
+    //console.log(findShortestPath(graph, "A", "start"));
+    // console.log(findShortestPath(graph, "B", "D"));
 
 
 
